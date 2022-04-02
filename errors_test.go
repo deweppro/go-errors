@@ -66,6 +66,12 @@ func TestWrap(t *testing.T) {
 			want:    "err1 message: err1\n\t[trace] github.com/deweppro/go-errors.TestWrap:65\n: err2 message: err2\n\t[trace] github.com/deweppro/go-errors.TestWrap:65\n: err3 message: err3\n\t[trace] github.com/deweppro/go-errors.TestWrap:65\n",
 			wantErr: true,
 		},
+		{
+			name:    "Case5",
+			args:    args{msg: []error{nil, nil, nil}},
+			want:    "",
+			wantErr: false,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -111,7 +117,7 @@ func TestWrapMessage(t *testing.T) {
 				message: "err context",
 				args:    nil,
 			},
-			want:    "err context: err1\n\t[trace] github.com/deweppro/go-errors.TestWrapMessage.func1:130\n",
+			want:    "err context: err1\n\t[trace] github.com/deweppro/go-errors.TestWrapMessage.func1:136\n",
 			wantErr: true,
 		},
 		{
@@ -121,7 +127,7 @@ func TestWrapMessage(t *testing.T) {
 				message: "bad ip %s",
 				args:    []interface{}{"127.0.0.1"},
 			},
-			want:    "bad ip 127.0.0.1: err1\n\t[trace] github.com/deweppro/go-errors.TestWrapMessage.func1:130\n",
+			want:    "bad ip 127.0.0.1: err1\n\t[trace] github.com/deweppro/go-errors.TestWrapMessage.func1:136\n",
 			wantErr: true,
 		},
 	}

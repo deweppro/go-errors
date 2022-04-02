@@ -60,7 +60,7 @@ func Wrap(msg ...error) error {
 	if len(msg) == 0 {
 		return nil
 	}
-	var err0 *errMessage
+	var err0 error
 	for _, v := range msg {
 		if v == nil {
 			continue
