@@ -1,6 +1,9 @@
 package errors
 
-import "fmt"
+import (
+	e "errors"
+	"fmt"
+)
 
 type errMessage struct {
 	cause   error
@@ -75,4 +78,38 @@ func Wrap(msg ...error) error {
 		}
 	}
 	return err0
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+type (
+	IUnwrap interface {
+		Unwrap() error
+	}
+	ICause interface {
+		Cause() error
+	}
+)
+
+func Unwrap(err error) error {
+	if v, ok := err.(IUnwrap); ok {
+		return v.Unwrap()
+	}
+	return nil
+}
+
+func Cause(err error) error {
+	for err != nil {
+		v, ok := err.(ICause)
+		if !ok {
+			break
+		}
+		err = v.Cause()
+	}
+
+	return nil
+}
+
+func Is(err, target error) bool {
+	return e.Is(err, target)
 }

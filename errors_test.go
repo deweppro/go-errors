@@ -203,3 +203,27 @@ func Test_errMessage_CauseUnwrap(t *testing.T) {
 		})
 	}
 }
+
+func Test_Is(t *testing.T) {
+	err0 := New("test")
+	type args struct {
+		err    error
+		target error
+	}
+	tests := []struct {
+		name string
+		args args
+		want bool
+	}{
+		{name: "Case1", args: args{err: err0, target: err0}, want: true},
+		{name: "Case2", args: args{err: WrapMessage(err0, "ttt"), target: err0}, want: true},
+		{name: "Case3", args: args{err: New("hello"), target: err0}, want: false},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := Is(tt.args.err, tt.args.target); got != tt.want {
+				t.Errorf("Is() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
