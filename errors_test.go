@@ -218,6 +218,8 @@ func Test_Is(t *testing.T) {
 		{name: "Case1", args: args{err: err0, target: err0}, want: true},
 		{name: "Case2", args: args{err: WrapMessage(err0, "ttt"), target: err0}, want: true},
 		{name: "Case3", args: args{err: New("hello"), target: err0}, want: false},
+		{name: "Case4", args: args{err: nil, target: err0}, want: false},
+		{name: "Case5", args: args{err: New("hello"), target: nil}, want: false},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
